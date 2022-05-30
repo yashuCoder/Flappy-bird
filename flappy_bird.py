@@ -17,16 +17,15 @@ high_score = 0
 i = 0
 game_quit = False
 
-# pygame.mixer.pre_init(frequency = 44100, size = 16, channels = 1, buffer = 512)
 pygame.init()
-
-
+#Function to set when a new game begins
 def welcome():
+    
     while(True):
-        photo = pygame.image.load(r"photos\me 4 (2).png").convert_alpha()
+        photo = pygame.image.load(r"photos\me.png").convert_alpha()
         message = pygame.image.load(r"photos\message.png").convert_alpha()
         message = pygame.transform.scale(message,(scwidth - 120,scheight-250))
-        down = pygame.image.load(r"photos\Screenshot (17) (1).png").convert_alpha()
+        down = pygame.image.load(r"photos\designed.png").convert_alpha()
         space = pygame.image.load(r"photos\space1.png").convert_alpha()
         space = pygame.transform.scale(space,(600,180))
         # down = pygame.transform.scale(down,(336,100))
@@ -43,7 +42,7 @@ def welcome():
                     return
         pygame.display.update()
     return
-
+#function to set when the game is over
 def gameover_():
     while(True):
         
@@ -62,7 +61,7 @@ def gameover_():
         pygame.display.update() 
         clock.tick(FPS)
     return
-    
+# Function to add some pipes to the list of pipes
 def pipegen(pipelis):
     pipe = pygame.image.load(r"photos\pipe-red.png").convert_alpha()
     pipe_rect = pipe.get_rect(midtop = (570,random.randrange(240,415)))
@@ -70,8 +69,9 @@ def pipegen(pipelis):
     pipe_r_rect = pipe_r.get_rect(midtop = (570,(pipe_rect.midtop[1] - off_set - pipe.get_height())))
     pipelis.append([pipe_rect,pipe_r_rect])
     return pipelis
-
+# Function to check whether the car colliding with the pipes or not
 def iscollide(pipelis):
+    # Here we create an invisible rectangle around every object and check whether the rectangles are colliding or not
     for pipes in pipelis:
         if bird_rect.colliderect(pipes[0]) == True or bird_rect.colliderect(pipes[1]) == True:
             return True
@@ -80,15 +80,15 @@ def iscollide(pipelis):
         else:
             return False
         
-
+# Function to rotate the car
 def rotate(bird_movement,bird):
     new_bird = pygame.transform.rotozoom(bird,-bird_movement*2.2,1)
     return new_bird
-
+# Function to play the music
 def play(path):
     pygame.mixer.music.load(path)
     pygame.mixer.music.play()
-
+# Funciton to animate the bird
 def animation():
     new_bird = bird_list[i]
     new_bird_rect = bird.get_rect(center = (50,bird_rect.centery))
@@ -225,7 +225,7 @@ if __name__ == "__main__":
             else:
                 window.blit(score1,(30,30))
             window.blit(high_score1,(180,30))
-            #This one is the main one haa
+            
             pygame.display.update()
             clock.tick(FPS)
         if score >= high_score:
